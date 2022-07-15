@@ -11,7 +11,11 @@ document.addEventListener("click", (event) => {
 
   if (event.target.dataset.type === "edit") {
     const id = event.target.dataset.id;
-    const newTitle = prompt("Введите новое название");
+    const el = document.querySelector(`p[data-id="${id}"]`);
+    const newTitle = prompt(
+      "Введите новое название",
+      `${el.textContent}`.trim()
+    );
 
     if (newTitle) {
       const putMethod = {
@@ -23,9 +27,7 @@ document.addEventListener("click", (event) => {
       };
 
       edit(id, putMethod).then(() => {
-        const actionBlock = document.querySelector(".action-block");
-        const el = document.querySelector(`[data-id="${id}"]`);
-        el.closest("li").innerHTML = `${newTitle} ${actionBlock.outerHTML}`;
+        el.textContent = newTitle;
       });
     }
   }
